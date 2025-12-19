@@ -66,7 +66,7 @@ const AddContest = () => {
   }
   return (
     <div>
-      <h2 className='text-3xl font-bold text-center'>Add your contest</h2>
+      <h2 className='text-3xl mb-2.5 font-bold text-center'>Add your contest</h2>
 
 
       {/* <div className='card bg-base-100 w-full mx-auto  shadow-xl py-5'>

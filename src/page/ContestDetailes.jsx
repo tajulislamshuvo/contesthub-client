@@ -1,7 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import Spinner from "../Components/Spinner/Spinner";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
+import { useQuery } from "@tanstack/react-query";
+import useAuth from "../hooks/useAuth";
+
+
 
 /* =======================
    Helper function (HOIST SAFE)
@@ -15,8 +19,12 @@ function formatTime(ms) {
 }
 
 const ContestDetailes = () => {
+  const submitTaskModal = useRef();
+
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
+  const { user, loading: userLoading } = useAuth();
+
 
   const [contest, setContest] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -66,10 +74,26 @@ const ContestDetailes = () => {
     return () => clearInterval(interval);
   }, [contest]);
 
-  if (loading) return <Spinner />;
+
+  const { data: payment } = useQuery({
+    queryKey: ['payment', user?.email, id],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/payments?customerEmail=${user?.email}&contestId=${id}`);
+      return res.data;
+    },
+    enabled: !!user?.email && !userLoading
+  })
+
+
+  const handleSubmitTask = () => {
+
+  }
+
+  if (loading || userLoading) return <Spinner />;
 
   const {
     name,
+    _id,
     creatorEmail,
     description,
     image,
@@ -154,9 +178,9 @@ const ContestDetailes = () => {
             )}
 
             {status === "running" && (
-              <button className="px-6 py-3 rounded-lg bg-[#0f1f3d] text-white hover:bg-[#1a2f5f]">
+              <Link to={`/dashboard/payment/${_id}`} className="px-6 py-3 rounded-lg bg-[#0f1f3d] text-white hover:bg-[#1a2f5f]">
                 Register & Pay
-              </button>
+              </Link>
             )}
 
             {status === "ended" && (
@@ -168,6 +192,14 @@ const ContestDetailes = () => {
               </button>
             )}
           </div>
+
+          {
+            payment && <div className="flex justify-center pt-4">
+              <button onClick={() => handleSubmitTask()} className="btn btn-primary text-lg">Submit task</button>
+            </div>
+          }
+
+
 
         </div>
       </div>
