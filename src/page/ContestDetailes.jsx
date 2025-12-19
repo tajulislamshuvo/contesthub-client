@@ -4,6 +4,7 @@ import Spinner from "../Components/Spinner/Spinner";
 import { Link, useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../hooks/useAuth";
+import { toast } from "react-toastify";
 
 
 
@@ -19,7 +20,8 @@ function formatTime(ms) {
 }
 
 const ContestDetailes = () => {
-  const submitTaskModal = useRef();
+  const submitTaskModal = useRef(null);
+  const [taskText, setTaskText] = useState("");
 
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
@@ -86,6 +88,29 @@ const ContestDetailes = () => {
 
 
   const handleSubmitTask = () => {
+    submitTaskModal.current.showModal()
+  }
+
+
+  const handleTaskDatabase = () => {
+    console.log(taskText);
+    const submissionInfo = {
+      contestId: contest._id,
+      participantEmail: user?.email,
+      submissionData: taskText,
+      createdAt: new Date(),
+
+    }
+
+    axiosSecure.post('', submissionInfo)
+      .then(res => {
+        if (res.data.insertedId) {
+          toast.success('Submission added successfully')
+        }
+      }).catch(err => {
+        toast.error(err.message);
+      })
+
 
   }
 
@@ -167,31 +192,37 @@ const ContestDetailes = () => {
           )}
 
           {/* Action Button */}
-          <div className="flex justify-center pt-4">
-            {status === "upcoming" && (
-              <button
-                disabled
-                className="px-6 py-3 rounded-lg bg-gray-300 text-gray-600 cursor-not-allowed"
-              >
-                Upcoming
-              </button>
-            )}
+          {
+            payment ? <div>
+              <button className="px-6 py-3 rounded-lg bg-gray-300 text-gray-600">Paid</button>
+            </div> : <div className="flex justify-center pt-4">
+              {status === "upcoming" && (
+                <button
+                  disabled
+                  className="px-6 py-3 rounded-lg bg-gray-300 text-gray-600 cursor-not-allowed"
+                >
+                  Upcoming
+                </button>
+              )}
 
-            {status === "running" && (
-              <Link to={`/dashboard/payment/${_id}`} className="px-6 py-3 rounded-lg bg-[#0f1f3d] text-white hover:bg-[#1a2f5f]">
-                Register & Pay
-              </Link>
-            )}
+              {status === "running" && (
+                <Link to={`/dashboard/payment/${_id}`} className="px-6 py-3 rounded-lg bg-[#0f1f3d] text-white hover:bg-[#1a2f5f]">
+                  Register & Pay
+                </Link>
+              )}
 
-            {status === "ended" && (
-              <button
-                disabled
-                className="px-6 py-3 rounded-lg bg-gray-400 text-white cursor-not-allowed"
-              >
-                Registration Closed
-              </button>
-            )}
-          </div>
+              {status === "ended" && (
+                <button
+                  disabled
+                  className="px-6 py-3 rounded-lg bg-gray-400 text-white cursor-not-allowed"
+                >
+                  Registration Closed
+                </button>
+              )}
+            </div>
+
+
+          }
 
           {
             payment && <div className="flex justify-center pt-4">
@@ -203,6 +234,30 @@ const ContestDetailes = () => {
 
         </div>
       </div>
+
+
+      <dialog ref={submitTaskModal} className="modal modal-bottom sm:modal-middle">
+        <div className="modal-box max-w-3xl p-5">
+          <textarea name="submittask" value={taskText}
+            onChange={(e) => setTaskText(e.target.value)}
+            className="p-3 border border-gray-500 w-full h-[100px]" placeholder="Enter your task"></textarea>
+
+          <button onClick={() => handleTaskDatabase()} className="btn btn-primary mt-2">Submit</button>
+
+
+          {/* Footer */}
+          <div className="modal-action px-6 pb-6">
+            <form method="dialog">
+              <button className="btn">Close</button>
+            </form>
+          </div>
+
+        </div>
+      </dialog>
+
+
+
+
     </div>
   );
 };
