@@ -14,6 +14,10 @@ import PrivateRoute from "./PrivateRoute";
 import Payment from "../Components/Dashboard/Payment/Payment";
 import PaymentSuccess from "../Components/Dashboard/Payment/PaymentSuccess";
 import PaymentCancelled from "../Components/Dashboard/Payment/PaymentCancelled";
+import ManageUsers from "../Components/Dashboard/ManageUsers";
+import MyContest from "../Components/Dashboard/MyContest";
+import EditContest from "../Components/Dashboard/EditContest";
+import ContestSubmission from "../Components/Dashboard/ContestSubmission";
 
 
 export const router = createBrowserRouter([
@@ -60,6 +64,22 @@ export const router = createBrowserRouter([
     {
       path: 'manage-contest',
       element: <ManageContest></ManageContest>
+    },
+    {
+      path: 'manage-users',
+      element: <ManageUsers></ManageUsers>
+    },
+    {
+      path: 'my-contest',
+      element: <MyContest></MyContest>
+    },
+    {
+      path: 'edit-contest/:id',
+      element: <EditContest></EditContest>
+    },
+    {
+      path: 'contest-submission/:id',
+      element: <ContestSubmission></ContestSubmission>
     },
     {
       path: 'payment/:contestId',

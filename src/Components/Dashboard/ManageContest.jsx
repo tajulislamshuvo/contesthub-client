@@ -56,7 +56,7 @@ const ManageContest = () => {
 
   return (
     <div>
-      <h2>All contest request</h2>
+
 
 
       <div className="hidden md:block bg-white rounded-2xl shadow-md   overflow-hidden">
@@ -131,7 +131,7 @@ const ManageContest = () => {
                 className="h-16 w-16 object-cover rounded-lg"
               />
               <div>
-                <h3 className="font-semibold text-[#8B0E17] text-base">
+                <h3 className="font-semibold text-gray-600 text-base">
                   {contest.name}
                 </h3>
                 <p className="text-sm text-gray-600">{contest.creatorEmail}</p>

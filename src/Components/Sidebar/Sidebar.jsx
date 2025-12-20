@@ -5,12 +5,14 @@ import { Link } from 'react-router'
 // Icons
 import { GrLogout } from 'react-icons/gr'
 import { FcSettings } from 'react-icons/fc'
-import { AiOutlineBars } from 'react-icons/ai'
+import { AiOutlineBars, AiOutlineTransaction } from 'react-icons/ai'
 import { BsGraphUp } from 'react-icons/bs'
 import useAuth from '../../hooks/useAuth'
 import MenuItem from '../Dashboard/MenuItem'
-import { MdOutlineAddTask } from 'react-icons/md'
+import { MdOutlineAddTask, MdOutlineTask } from 'react-icons/md'
 import { GoTasklist } from 'react-icons/go'
+import { FaUserCog } from 'react-icons/fa'
+import { IoCheckmarkDoneSharp } from 'react-icons/io5'
 
 // User Menu
 // import MenuItem from './Menu/MenuItem'
@@ -95,10 +97,36 @@ const Sidebar = () => {
               />
               <MenuItem
 
+                icon={MdOutlineTask}
+                label='My contests'
+                address='my-contest'
+              />
+              <MenuItem
+
                 icon={GoTasklist}
                 label='Manage contest'
                 address='manage-contest'
               />
+              <MenuItem
+
+                icon={FaUserCog}
+                label='Manage users'
+                address='manage-users'
+              />
+              <MenuItem
+
+                icon={AiOutlineTransaction}
+                label='Transections'
+                address=''
+              />
+              <MenuItem
+
+                icon={IoCheckmarkDoneSharp}
+                label='My submissions'
+                address=''
+              />
+
+
               {/* Role-Based Menu */}
               {/* {role === 'customer' && <CustomerMenu />}
               {role === 'seller' && <SellerMenu />}
@@ -110,11 +138,7 @@ const Sidebar = () => {
           <div>
             <hr />
 
-            <MenuItem
-              icon={FcSettings}
-              label='Profile'
-              address='/dashboard/profile'
-            />
+
             <button
               onClick={logOut}
               className='flex cursor-pointer w-full items-center px-4 py-2 mt-5 text-gray-600 hover:bg-gray-300   hover:text-gray-700 transition-colors duration-300 transform'

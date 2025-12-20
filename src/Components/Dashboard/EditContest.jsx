@@ -1,108 +1,123 @@
 import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css";
 import { useForm } from 'react-hook-form';
-import useAuth from '../../hooks/useAuth';
-import axios from 'axios';
-import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { toast } from 'react-toastify';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router';
+import { useQuery } from '@tanstack/react-query';
+import Spinner from '../Spinner/Spinner';
 
-const AddContest = () => {
-  const { user } = useAuth()
-  const { register, handleSubmit, reset, formState: { errors }, } = useForm();
+const EditContest = () => {
+  const { id } = useParams();
+  const { register, handleSubmit } = useForm();
+  const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
-  useEffect(() => {
-    if (user?.email) {
-      reset({
-        creatorEmail: user.email,
-      });
+
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+
+
+
+  const { data: contest, isLoading } = useQuery({
+    queryKey: ['contest', id, 'edit'],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/contests/${id}`);
+      return res.data;
     }
-  }, [user, reset]);
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  })
 
-  const handleAddContest = (data) => {
-    console.log(data, startDate, endDate);
-    const profileImg = data.photo[0];
-    const formData = new FormData();
-    formData.append('image', profileImg);
-    const image_API_URL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`
 
-    axios.post(image_API_URL, formData)
-      .then(res => {
-        console.log('after image upload ', res.data.data.url);
-        const photoURL = res.data.data.url;
+  useEffect(() => {
+    if (contest) {
+      setStartDate(new Date(contest.startTime));
+      setEndDate(new Date(contest.endTime));
+    }
+  }, [contest]);
 
-        const contestData = {
-          name: data.name,
-          image: photoURL,
-          description: data.description,
-          creatorEmail: data.creatorEmail,
-          price: Number(data.price),
-          prize: Number(data.prize),
-          instruction: data.instruction,
-          type: data.type,
-          startTime: startDate,
-          endTime: endDate,
-          status: 'pending',
-          createdAt: new Date(),
-          participantsCount: Number(0),
-        }
-        axiosSecure.post('/contests', contestData)
-          .then(res => {
-            if (res.data.insertedId) {
-              toast.success('Contest added successfully')
-            }
-          }).catch(err => {
-            toast.error(err.message);
-          })
 
-        console.log(contestData);
+  const handleEditContest = async (data) => {
+    try {
+      let photoURL = null;
 
-      }).catch(err => {
-        console.log(err.message)
-      })
+      // ✅ Upload image only if selected
+      if (data.photo && data.photo.length > 0) {
+        const formData = new FormData();
+        formData.append('image', data.photo[0]);
 
+        const image_API_URL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`;
+        const imgRes = await axios.post(image_API_URL, formData);
+
+        photoURL = imgRes.data.data.url;
+      }
+
+      // ✅ Build update object
+      const contestEditedData = {
+        name: data.name,
+        description: data.description,
+        price: Number(data.price),
+        prize: Number(data.prize),
+        instruction: data.instruction,
+        type: data.type,
+        startTime: startDate || contest.startTime,
+        endTime: endDate || contest.endTime,
+        status: 'pending',
+        updatedAt: new Date(),
+        image: `${photoURL ? photoURL : contest.image}`
+      };
+
+      // ✅ Only add image if uploaded
+      if (photoURL) {
+        contestEditedData.image = photoURL;
+      }
+
+      const res = await axiosSecure.patch(
+        `/contests/edit/${id}`,
+        contestEditedData
+      );
+
+      if (res.data.modifiedCount) {
+        toast.success('Contest edited successfully');
+        navigate('/dashboard/my-contest')
+      }
+    } catch (err) {
+      toast.error(err.message);
+      console.error(err);
+    }
+  };
+
+
+  if (isLoading) {
+    return <Spinner></Spinner>
   }
+
+
+
   return (
     <div>
-      <h2 className='text-3xl mb-2.5 font-bold text-center'>Add your contest</h2>
-
-
-
-
+      <h2 className='text-3xl mb-2.5 font-bold text-center'>Edit your contest</h2>
 
       <div className='card bg-base-100 w-full max-w-4xl mx-auto shadow-xl py-5'>
-        <form className='card-body' onSubmit={handleSubmit(handleAddContest)}>
+        <form onSubmit={handleSubmit(handleEditContest)} className='card-body'>
           <fieldset className="fieldset">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
               {/* Left Column */}
               <div className="space-y-4">
                 {/* Creator email */}
-                <div>
-                  <label className="label">Creator email</label>
-                  <input
-                    // defaultValue={user?.email || ''}
-                    // value={user?.email || ''}
-                    type="email"
-                    {...register('creatorEmail')}
-                    className="input input-bordered w-full"
-                    placeholder="Creator email"
 
-                  />
-                </div>
 
                 {/* Contest name */}
                 <div>
                   <label className="label">Contest name</label>
                   <input
+                    defaultValue={contest.name}
                     type="text"
-                    {...register('name', { required: true })}
+                    {...register('name')}
                     className="input input-bordered w-full"
                     placeholder="Contest name"
                   />
-                  {errors.name?.type === 'required' && <p className='text-red-500 text-sm mt-1'>Contest name is required</p>}
+
                 </div>
 
                 {/* Image */}
@@ -110,16 +125,18 @@ const AddContest = () => {
                   <label className="label">Image</label>
                   <input
                     type="file"
-                    {...register('photo', { required: true })}
+
+                    {...register('photo')}
                     className="file-input file-input-bordered w-full"
                   />
-                  {errors.photo?.type === 'required' && <p className='text-red-500 text-sm mt-1'>Image is required</p>}
+
                 </div>
 
                 {/* Entry fee */}
                 <div>
                   <label className="label">Entry fee</label>
                   <input
+                    defaultValue={contest.price}
                     type="number"
                     {...register('price')}
                     className="input input-bordered w-full"
@@ -131,6 +148,7 @@ const AddContest = () => {
                 <div>
                   <label className="label">Prize money</label>
                   <input
+                    defaultValue={contest.prize}
                     type="number"
                     {...register('prize')}
                     className="input input-bordered w-full"
@@ -142,6 +160,7 @@ const AddContest = () => {
                 <div>
                   <label className="label">Contest type</label>
                   <input
+                    defaultValue={contest.type}
                     type="text"
                     {...register('type')}
                     className="input input-bordered w-full"
@@ -156,17 +175,19 @@ const AddContest = () => {
                 <div>
                   <label className="label">Task description</label>
                   <textarea
-                    {...register('description', { required: true })}
+                    defaultValue={contest.description}
+                    {...register('description')}
                     className="textarea textarea-bordered w-full h-32"
                     placeholder="Description"
                   ></textarea>
-                  {errors.description?.type === 'required' && <p className='text-red-500 text-sm mt-1'>Description is required</p>}
+
                 </div>
 
                 {/* Task instruction */}
                 <div>
                   <label className="label">Task instruction</label>
                   <textarea
+                    defaultValue={contest.instruction}
                     {...register('instruction')}
                     className="textarea textarea-bordered w-full h-32"
                     placeholder="Task instruction"
@@ -178,6 +199,7 @@ const AddContest = () => {
                   <label className="label mr-1.5">Start time</label>
                   <DatePicker
                     selected={startDate}
+
                     onChange={(date) => setStartDate(date)}
                     className="input input-bordered w-full px-4 py-2 cursor-pointer"
                     showTimeSelect
@@ -206,14 +228,15 @@ const AddContest = () => {
             {/* Submit button - full width, centered */}
             <div className="mt-8 text-center">
               <button type="submit" className='btn btn-primary btn-wide'>
-                Create Contest
+                Edit Contest
               </button>
             </div>
           </fieldset>
         </form>
       </div>
+
     </div>
   );
 };
 
-export default AddContest;
+export default EditContest;

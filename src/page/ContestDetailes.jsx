@@ -102,15 +102,18 @@ const ContestDetailes = () => {
 
     }
 
-    axiosSecure.post('', submissionInfo)
+    axiosSecure.post('/submissions', submissionInfo)
       .then(res => {
         if (res.data.insertedId) {
+          console.log(res.data)
           toast.success('Submission added successfully')
         }
       }).catch(err => {
-        toast.error(err.message);
+        const msg = err.response?.data?.message || err.message;
+        toast.error(msg);
       })
-
+    setTaskText("");
+    submitTaskModal.current.close()
 
   }
 
