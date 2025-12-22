@@ -5,7 +5,7 @@ The platform is designed to encourage fair competition, creativity, and skill-ba
 
 🔗 Live Website
 
-(Add your deployed website link here)
+(https://contesthub-platform25.netlify.app/)
 
 📌 Features Overview
 👤 User Roles

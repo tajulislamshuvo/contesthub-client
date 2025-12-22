@@ -3,7 +3,7 @@ import React from 'react';
 
 
 const axiosSecure = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: 'https://contesthub-server-omega.vercel.app',
 });
 
 const useAxiosSecure = () => {
