@@ -7,7 +7,6 @@ import Spinner from '../Components/Spinner/Spinner';
 const AllContest = () => {
   const axiosSecure = useAxiosSecure();
 
-  const [value, setValue] = useState(false);
   const [searching, setSearching] = useState(false);
 
   const { data: contests = [], isLoading } = useQuery({
@@ -45,14 +44,6 @@ const AllContest = () => {
     }
   };
 
-  useEffect(() => {
-    if (models.length < 1) {
-      setValue(true);
-    } else {
-      setValue(false);
-    }
-  }, [models]);
-
 
   if (isLoading || searching) {
     return <Spinner></Spinner>
@@ -85,7 +76,11 @@ const AllContest = () => {
         <button className="btn btn-primary text-white font-medium hover:bg-[#3d88e9]  rounded-full"> {searching ? "Searching..." : "Search"}</button>
       </form>
 
-      <p className='text-3xl text-center font-bold flex justify-center items-center text-[#0770e7]'>{value ? 'Not found any contest in this type' : ''}</p>
+      {models.length === 0 && !searching && (
+        <p className='text-3xl text-center font-bold text-[#0770e7] my-10'>
+          Not found any contest in this type
+        </p>
+      )}
       <div className='grid grid-cols-1 md:grid-cols-3 gap-4 py-10 mx-auto w-11/12'>
         {
           models.map((contest, index) => <ContestCard key={contest._id} contest={contest} index={index}></ContestCard>)
