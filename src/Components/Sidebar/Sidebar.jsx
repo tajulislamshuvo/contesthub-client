@@ -13,6 +13,8 @@ import { MdOutlineAddTask, MdOutlineTask } from 'react-icons/md'
 import { GoTasklist } from 'react-icons/go'
 import { FaPushed, FaUserCog } from 'react-icons/fa'
 import { IoCheckmarkDoneSharp } from 'react-icons/io5'
+import useRole from '../../hooks/useRole'
+import Spinner from '../Spinner/Spinner'
 
 // User Menu
 // import MenuItem from './Menu/MenuItem'
@@ -21,7 +23,8 @@ import { IoCheckmarkDoneSharp } from 'react-icons/io5'
 // import CustomerMenu from './Menu/CustomerMenu'
 
 const Sidebar = () => {
-  const { logOut } = useAuth()
+  const { logOut } = useAuth();
+  const { role, roleLoading } = useRole();
   const [isActive, setActive] = useState(false)
   // const [role, isRoleLoading] = useRole()
 
@@ -30,7 +33,9 @@ const Sidebar = () => {
     setActive(!isActive)
   }
 
-  // if (isRoleLoading) return <LoadingSpinner />
+  if (roleLoading) {
+    return <Spinner></Spinner>
+  }
 
   return (
     <>
@@ -89,6 +94,9 @@ const Sidebar = () => {
                 label='Statistics'
                 address='/dashboard'
               />
+
+
+
               <MenuItem
 
                 icon={MdOutlineAddTask}
@@ -101,18 +109,29 @@ const Sidebar = () => {
                 label='My contests'
                 address='my-contest'
               />
+
+
+
+
               <MenuItem
 
                 icon={GoTasklist}
                 label='Manage contest'
                 address='manage-contest'
               />
+
+
               <MenuItem
 
                 icon={FaUserCog}
                 label='Manage users'
                 address='manage-users'
               />
+
+
+
+
+
               <MenuItem
 
                 icon={AiOutlineTransaction}
