@@ -12,7 +12,6 @@ const Home = () => {
     queryKey: ['contests', 'approved', 'limit'],
     queryFn: async () => {
       const res = await axiosSecure.get(`/popular-contests?status=approved`);
-      console.log(res.data);
       return res.data;
     }
   })

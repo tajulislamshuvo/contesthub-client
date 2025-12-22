@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router";
 
 const ContestCard = ({ contest }) => {
-  console.log(contest)
   return (
     <div className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
 

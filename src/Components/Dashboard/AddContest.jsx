@@ -25,7 +25,6 @@ const AddContest = () => {
   const [endDate, setEndDate] = useState(new Date());
 
   const handleAddContest = (data) => {
-    console.log(data, startDate, endDate);
     const profileImg = data.photo[0];
     const formData = new FormData();
     formData.append('image', profileImg);
@@ -33,7 +32,6 @@ const AddContest = () => {
 
     axios.post(image_API_URL, formData)
       .then(res => {
-        console.log('after image upload ', res.data.data.url);
         const photoURL = res.data.data.url;
 
         const contestData = {
@@ -63,7 +61,6 @@ const AddContest = () => {
             toast.error(err.message);
           })
 
-        console.log(contestData);
 
       }).catch(err => {
         console.log(err.message)
