@@ -95,20 +95,24 @@ const Sidebar = () => {
                 address='/dashboard'
               />
 
+              {
+                role === 'creator' && <>
+                  <MenuItem
 
+                    icon={MdOutlineAddTask}
+                    label='Add contest'
+                    address='add-contest'
+                  />
+                  <MenuItem
 
-              <MenuItem
+                    icon={MdOutlineTask}
+                    label='My contests'
+                    address='my-contest'
+                  />
 
-                icon={MdOutlineAddTask}
-                label='Add contest'
-                address='add-contest'
-              />
-              <MenuItem
+                </>
+              }
 
-                icon={MdOutlineTask}
-                label='My contests'
-                address='my-contest'
-              />
 
 
 
