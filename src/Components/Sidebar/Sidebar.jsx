@@ -114,23 +114,30 @@ const Sidebar = () => {
               }
 
 
+              {
+                role === 'admin' && <>
+                  <MenuItem
+
+                    icon={GoTasklist}
+                    label='Manage contest'
+                    address='manage-contest'
+                  />
+
+
+                  <MenuItem
+
+                    icon={FaUserCog}
+                    label='Manage users'
+                    address='manage-users'
+                  />
+                </>
+              }
 
 
 
-              <MenuItem
-
-                icon={GoTasklist}
-                label='Manage contest'
-                address='manage-contest'
-              />
 
 
-              <MenuItem
 
-                icon={FaUserCog}
-                label='Manage users'
-                address='manage-users'
-              />
 
 
 
