@@ -21,6 +21,8 @@ import ContestSubmission from "../Components/Dashboard/ContestSubmission";
 import MySubmission from "../Components/Dashboard/MySubmission";
 import MyTransaction from "../Components/Dashboard/MyTransaction";
 import DashboardOverview from "../Components/Dashboard/DashboardOverview";
+import CreatorRoute from "./CreatorRoute";
+import AdminRoute from "./AdminRoute";
 
 
 export const router = createBrowserRouter([
@@ -62,27 +64,29 @@ export const router = createBrowserRouter([
     },
     {
       path: 'add-contest',
-      element: <AddContest></AddContest>
+      element: <CreatorRoute><AddContest></AddContest></CreatorRoute>
     },
     {
       path: 'manage-contest',
-      element: <ManageContest></ManageContest>
+      element: <AdminRoute><ManageContest></ManageContest></AdminRoute>
     },
     {
       path: 'manage-users',
-      element: <ManageUsers></ManageUsers>
+      element: <AdminRoute><ManageUsers></ManageUsers></AdminRoute>
     },
     {
       path: 'my-contest',
-      element: <MyContest></MyContest>
+      element: <CreatorRoute><MyContest></MyContest></CreatorRoute>
     },
     {
       path: 'edit-contest/:id',
-      element: <EditContest></EditContest>
+      element: <CreatorRoute><EditContest></EditContest></CreatorRoute>
+
     },
     {
       path: 'contest-submission/:id',
-      element: <ContestSubmission></ContestSubmission>
+      element: <CreatorRoute><ContestSubmission></ContestSubmission></CreatorRoute>
+
     },
     {
       path: 'my-submission',

@@ -23,7 +23,6 @@ const Register = () => {
   const { registerUser, setUser, updateUser } = useAuth();
 
   const handleRegistration = (data) => {
-    console.log(data);
     registerUser(data.email, data.password)
       .then(result => {
 
@@ -40,7 +39,6 @@ const Register = () => {
             }
           })
         const user1 = result.user
-        console.log(result.user)
         updateUser({ displayName: data.name, photoURL: data.photo }).then(() => {
           setUser({ ...user1, displayName: data.name, photoURL: data.photo });
         }).catch((err) => {

@@ -4,6 +4,7 @@ import useAxiosSecure from '../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import Spinner from '../Components/Spinner/Spinner';
 import ContestCard from '../Components/ContestCard/ContestCard';
+import WinnerParticipant from '../Components/WinnerParticipant/WinnerParticipant';
 
 const Home = () => {
 
@@ -30,6 +31,8 @@ const Home = () => {
           contests.map(contest => <ContestCard key={contest._id} contest={contest}></ContestCard>)
         }
       </div>
+
+      <WinnerParticipant></WinnerParticipant>
     </div>
   );
 };
