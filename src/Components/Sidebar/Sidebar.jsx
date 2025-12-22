@@ -136,6 +136,22 @@ const Sidebar = () => {
 
 
 
+              {
+                role === 'user' && <>
+                  <MenuItem
+
+                    icon={AiOutlineTransaction}
+                    label='Transections'
+                    address='my-transaction'
+                  />
+                  <MenuItem
+
+                    icon={FaPushed}
+                    label='My submissions'
+                    address='my-submission'
+                  />
+                </>
+              }
 
 
 
@@ -143,18 +159,6 @@ const Sidebar = () => {
 
 
 
-              <MenuItem
-
-                icon={AiOutlineTransaction}
-                label='Transections'
-                address='my-transaction'
-              />
-              <MenuItem
-
-                icon={FaPushed}
-                label='My submissions'
-                address='my-submission'
-              />
 
 
               {/* Role-Based Menu */}
