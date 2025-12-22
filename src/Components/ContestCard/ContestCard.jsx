@@ -20,7 +20,7 @@ const ContestCard = ({ contest }) => {
           <h2 className="text-lg font-bold text-[#0f1f3d]">
             {contest.name}
           </h2>
-          <span className="text-sm text-gray-600 bg-blue-100 px-2 py-1 rounded-full">
+          <span className="text-sm text-gray-600 text-center bg-blue-100 px-2 py-1 rounded-full">
             {contest.participantsCount} Participants
           </span>
         </div>

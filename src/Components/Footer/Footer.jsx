@@ -10,7 +10,7 @@ const Footer = () => {
           <span className="text-[#1e40af]">Contest </span>
           <span className="text-[#60a5fa]">Hub</span>
         </h1>
-        <p className='w-65'>Connecting taste explorers with hidden gems, authentic bites, and real reviews. From street stalls to cozy kitchens, we celebrate every local flavor. Join the community. Share your plate. Discover what’s delicious nearby.</p>
+        <p className='w-65'>ContestHub is the ultimate platform for creating, discovering, and participating in creative contests — from design and writing to business ideas and gaming reviews. Unleash your creativity and win amazing prizes!</p>
       </nav>
       <nav>
         <h6 className="footer-title">Company</h6>

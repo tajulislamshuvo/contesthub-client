@@ -11,7 +11,7 @@ import useAuth from '../../hooks/useAuth'
 import MenuItem from '../Dashboard/MenuItem'
 import { MdOutlineAddTask, MdOutlineTask } from 'react-icons/md'
 import { GoTasklist } from 'react-icons/go'
-import { FaUserCog } from 'react-icons/fa'
+import { FaPushed, FaUserCog } from 'react-icons/fa'
 import { IoCheckmarkDoneSharp } from 'react-icons/io5'
 
 // User Menu
@@ -121,9 +121,9 @@ const Sidebar = () => {
               />
               <MenuItem
 
-                icon={IoCheckmarkDoneSharp}
+                icon={FaPushed}
                 label='My submissions'
-                address=''
+                address='my-submission'
               />
 
 

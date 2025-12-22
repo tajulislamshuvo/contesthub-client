@@ -10,7 +10,7 @@ import Spinner from '../Spinner/Spinner';
 
 const EditContest = () => {
   const { id } = useParams();
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
 
@@ -78,6 +78,7 @@ const EditContest = () => {
 
       if (res.data.modifiedCount) {
         toast.success('Contest edited successfully');
+        reset()
         navigate('/dashboard/my-contest')
       }
     } catch (err) {

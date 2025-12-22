@@ -18,6 +18,7 @@ import ManageUsers from "../Components/Dashboard/ManageUsers";
 import MyContest from "../Components/Dashboard/MyContest";
 import EditContest from "../Components/Dashboard/EditContest";
 import ContestSubmission from "../Components/Dashboard/ContestSubmission";
+import MySubmission from "../Components/Dashboard/MySubmission";
 
 
 export const router = createBrowserRouter([
@@ -80,6 +81,10 @@ export const router = createBrowserRouter([
     {
       path: 'contest-submission/:id',
       element: <ContestSubmission></ContestSubmission>
+    },
+    {
+      path: 'my-submission',
+      element: <MySubmission></MySubmission>
     },
     {
       path: 'payment/:contestId',
