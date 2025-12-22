@@ -21,7 +21,7 @@ const Login = () => {
   const { signInUser, handleForgetPass } = useAuth();
   const handleLogin = (data) => {
     signInUser(data.email, data.password).then((result) => {
-      console.log(result)
+
       toast.success('Login successfull')
       navigate(location?.state || '/')
 
