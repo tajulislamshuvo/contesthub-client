@@ -6,8 +6,11 @@ import useAuth from '../../hooks/useAuth';
 import axios from 'axios';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router';
+
 
 const AddContest = () => {
+  const navigate = useNavigate()
   const { user } = useAuth()
   const { register, handleSubmit, reset, formState: { errors }, } = useForm();
   const axiosSecure = useAxiosSecure();
@@ -51,7 +54,10 @@ const AddContest = () => {
         axiosSecure.post('/contests', contestData)
           .then(res => {
             if (res.data.insertedId) {
-              toast.success('Contest added successfully')
+              reset();
+              toast.success('Contest added successfully');
+              navigate('/dashboard/my-contest')
+
             }
           }).catch(err => {
             toast.error(err.message);

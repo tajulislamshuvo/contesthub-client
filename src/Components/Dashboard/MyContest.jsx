@@ -96,7 +96,7 @@ const MyContest = () => {
 
                 <td>
                   {
-                    contest.status !== 'apprjved' ?
+                    contest.status !== 'approved' ?
                       <div>
                         <Link to={`/dashboard/edit-contest/${contest._id}`} className="px-3 py-1 border border-[#0e2f8b] text-[#5571ec] rounded-lg hover:bg-primary hover:text-white ">
                           Edit
@@ -147,7 +147,7 @@ const MyContest = () => {
 
             <div className="flex justify-end gap-2">
               {
-                contest.status !== 'apprjved' ?
+                contest.status !== 'approved' ?
                   <div>
                     <Link to={`/dashboard/edit-contest/${contest._id}`} className="px-3 py-1 border border-[#0e2f8b] text-[#5571ec] rounded-lg hover:bg-primary hover:text-white ">
                       Edit
