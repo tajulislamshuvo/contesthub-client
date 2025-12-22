@@ -74,6 +74,39 @@ const MyTransaction = () => {
         </table>
       </div>
 
+
+
+
+      <div className="grid grid-cols-1 gap-4 md:hidden">
+        {transections.map((transaction, index) => (
+          <div
+            key={transaction._id}
+
+            className="bg-white rounded-xl shadow-md border border-[#c9cbe2] p-4"
+          >
+            <div className="flex items-center gap-3 mb-3">
+              <h2>{index + 1}</h2>
+              <div>
+
+                <p className="text-sm text-gray-600">{transaction.contestName}</p>
+                <p className="text-xs font-bold text-gray-500">
+                  {transaction.amount}
+                </p>
+                <p className="text-xs font-bold text-gray-500">
+                  {transaction.transectionId}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-2">
+              <h2 className='font-bold text-green-600'>{transaction.paymentStatus}</h2>
+
+            </div>
+          </div>
+        ))}
+      </div>
+
+
     </div>
   );
 };
