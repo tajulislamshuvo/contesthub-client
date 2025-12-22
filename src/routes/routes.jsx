@@ -20,6 +20,7 @@ import EditContest from "../Components/Dashboard/EditContest";
 import ContestSubmission from "../Components/Dashboard/ContestSubmission";
 import MySubmission from "../Components/Dashboard/MySubmission";
 import MyTransaction from "../Components/Dashboard/MyTransaction";
+import DashboardOverview from "../Components/Dashboard/DashboardOverview";
 
 
 export const router = createBrowserRouter([
@@ -57,7 +58,7 @@ export const router = createBrowserRouter([
     element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
     children: [{
       index: true,
-      element: <h3>Hellow to Dashboard</h3>
+      element: <DashboardOverview></DashboardOverview>
     },
     {
       path: 'add-contest',

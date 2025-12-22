@@ -91,7 +91,7 @@ const Sidebar = () => {
               <MenuItem
 
                 icon={BsGraphUp}
-                label='Statistics'
+                label='Dashboard overview'
                 address='/dashboard'
               />
 
