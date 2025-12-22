@@ -27,6 +27,7 @@ const Navbar = () => {
             <li className='font-bold text-[#2563eb]'><NavLink to='/'>Home</NavLink></li>
 
             <li className='font-bold text-[#2563eb]'><NavLink to='/all-contest'>All Contest</NavLink></li>
+            <li className='font-bold text-[#2563eb]'><NavLink to='/blog'>Blog</NavLink></li>
 
           </ul>
         </div>
@@ -42,6 +43,8 @@ const Navbar = () => {
           <li className='font-bold text-[#2563eb]'><NavLink to='/'>Home</NavLink></li>
 
           <li className='font-bold text-[#2563eb]'><NavLink to='/all-contest'>All Contest</NavLink></li>
+
+          <li className='font-bold text-[#2563eb]'><NavLink to='/blog'>Blog</NavLink></li>
 
 
         </ul>

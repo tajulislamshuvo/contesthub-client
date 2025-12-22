@@ -23,6 +23,7 @@ import MyTransaction from "../Components/Dashboard/MyTransaction";
 import DashboardOverview from "../Components/Dashboard/DashboardOverview";
 import CreatorRoute from "./CreatorRoute";
 import AdminRoute from "./AdminRoute";
+import Blog from "../Components/Blog/Blog";
 
 
 export const router = createBrowserRouter([
@@ -39,6 +40,10 @@ export const router = createBrowserRouter([
       {
         path: 'all-contest',
         element: <AllContest></AllContest>
+      },
+      {
+        path: 'blog',
+        element: <Blog></Blog>
       },
       {
         path: 'contest/:id',
