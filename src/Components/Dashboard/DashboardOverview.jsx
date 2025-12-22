@@ -3,6 +3,7 @@ import useRole from '../../hooks/useRole';
 import Spinner from '../Spinner/Spinner';
 import UserOverview from './UserOverview';
 import AdminOverview from './AdminOverview';
+import CreatorOverview from './CreatorOverview';
 
 const DashboardOverview = () => {
   const { role, roleLoading } = useRole();
@@ -17,6 +18,10 @@ const DashboardOverview = () => {
       }
       {
         role === "admin" && <AdminOverview></AdminOverview>
+      }
+
+      {
+        role === "creator" && <CreatorOverview></CreatorOverview>
       }
     </div>
 
