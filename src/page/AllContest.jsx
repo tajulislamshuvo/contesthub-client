@@ -88,7 +88,7 @@ const AllContest = () => {
       <p className='text-3xl text-center font-bold flex justify-center items-center text-[#0770e7]'>{value ? 'Not found any contest in this type' : ''}</p>
       <div className='grid grid-cols-1 md:grid-cols-3 gap-4 py-10 mx-auto w-11/12'>
         {
-          models.map(contest => <ContestCard key={contest._id} contest={contest}></ContestCard>)
+          models.map((contest, index) => <ContestCard key={contest._id} contest={contest} index={index}></ContestCard>)
         }
 
       </div>

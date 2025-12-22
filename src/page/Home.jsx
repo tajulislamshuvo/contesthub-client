@@ -28,7 +28,7 @@ const Home = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 py-10 mx-auto w-11/12">
         {
-          contests.map(contest => <ContestCard key={contest._id} contest={contest}></ContestCard>)
+          contests.map((contest, index) => <ContestCard key={contest._id} contest={contest} index={index}></ContestCard>)
         }
       </div>
 
